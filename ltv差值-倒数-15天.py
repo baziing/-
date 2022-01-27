@@ -10,9 +10,9 @@ import numpy as np
 
 
 def fun(x,a,b,c):
-    return a*2.718**(-b*x)+c
-    # return a *sy.exp(-b * x) + c
-    # return a/(x+b)**1
+    # return a*2.718**(-b*x)+c
+    # return a *sy.log(b * x)
+    return a/(x+b)**2
 
 def ltv(end,day,n,a,b,c):
     sum=0
@@ -37,7 +37,7 @@ def solve_function(unsolved_value):
     return eq1
 
 if __name__ == '__main__':
-    data = pd.read_csv('test.csv')
+    data = pd.read_csv('esm.csv')
     data['amount'] = data['amount']/100/10000
     data['ppl'] = data['ppl']/10000
     print(data)
@@ -46,30 +46,34 @@ if __name__ == '__main__':
     eqList = []
 
     sum=0
-    date=5
+    date=180
     for i in range(0,date):
+        print(1,i)
         sum=sum+ltv(date-i,date,data.loc[i,'ppl'],a,b,c)
     sum=sum-data['amount'][0:date].sum()
-    eqList.append(sy.simplify(sum))
+    eqList.append(sum)
     print(eqList[-1])
 
     sum = 0
-    date = 10
+    date = 90
     for i in range(0, date):
+        print(2,i)
         sum = sum + ltv(date - i, date, data.loc[i, 'ppl'], a, b, c)
     sum = sum - data['amount'][0:date].sum()
-    eqList.append(sy.simplify(sum))
+    eqList.append(sum)
     print(eqList[-1])
 
-    sum = 0
-    date = 15
-    for i in range(0, date):
-        sum = sum + ltv(date - i,date, data.loc[i, 'ppl'], a, b, c)
-    sum = sum - data['amount'][0:date].sum()
-    eqList.append(sy.simplify(sum))
-    print(eqList[-1])
+    # sum = 0
+    # date = 15
+    # for i in range(0, date):
+    #     sum = sum + ltv(date - i,date, data.loc[i, 'ppl'], a, b, c)
+    # sum = sum - data['amount'][0:date].sum()
+    # eqList.append(sy.simplify(sum))
+    # print(eqList[-1])
 
     print(eqList)
+    # result = sy.solve(eqList, [a, b])
+    # print(result)
 
     # shishi()
     #

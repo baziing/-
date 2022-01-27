@@ -36,7 +36,9 @@ if __name__ == '__main__':
     mul=0
     date=40
     for i in range(0,int(date)):
-        mul = mul +funexp(int(date)-i, data.loc[i, 'ppl'], a, b, c)
+        mul = mul +funexp(int(date)-i, data.loc[i, 'ppl'], a, b,c)
+        print(funexp(int(date)-i, data.loc[i, 'ppl'], a, b, c))
+        # print(int(date)-i,data.loc[i, 'ppl'])
     mul = mul - data['amount'][0:int(date)].sum()
     eqList.append(sy.simplify(mul))
 

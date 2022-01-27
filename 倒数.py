@@ -21,6 +21,7 @@ def ltv1(begin,end,data,a,b,c):
                 print(day,i,fun(i, a, b, c))
                 sum = sum + fun(i, a, b, c)
         all=all+sum*data.loc[day,'ppl']
+    print(all)
     return all
 
 def duoxiangshi():
@@ -32,12 +33,12 @@ def duoxiangshi():
 
     eqList=[]
     begin=0
-    end=90
+    end=180
     print(end/2)
     # eqList.append(sy.simplify(ltv1(begin,5, data, a, b, 1) - data['amount'][begin:5].sum()))
     # print(eqList[-1])
     eqList.append(sy.simplify(ltv1(begin,int(end/2), data, a, b, 2) - data['amount'][begin:int(end/2)].sum()))
-    print(eqList[-1])
+    # print(eqList[-1])
     eqList.append(sy.simplify(ltv1(begin,end, data, a, b, 2) - data['amount'][begin:end].sum( )))
 
     print(len(eqList))
