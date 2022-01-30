@@ -12,7 +12,9 @@ import numpy as np
 def fun(x,a,b,c):
     # return a*2.718**(-b*x)+c
     # return a *sy.log(b * x)
-    return a/(x+b)**2
+    # return a/(x+b)
+    # return a*sy.exp(b*x)
+    return a/(sy.log(x+b)+x)
 
 def ltv(end,day,n,a,b,c):
     sum=0
@@ -37,7 +39,7 @@ def solve_function(unsolved_value):
     return eq1
 
 if __name__ == '__main__':
-    data = pd.read_csv('esm.csv')
+    data = pd.read_csv('../goc.csv')
     data['amount'] = data['amount']/100/10000
     data['ppl'] = data['ppl']/10000
     print(data)
@@ -46,7 +48,7 @@ if __name__ == '__main__':
     eqList = []
 
     sum=0
-    date=180
+    date=45
     for i in range(0,date):
         print(1,i)
         sum=sum+ltv(date-i,date,data.loc[i,'ppl'],a,b,c)

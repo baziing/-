@@ -13,11 +13,12 @@ def funltv(x,a,b,c,base):
 
 def funexp(x,n,a,b,c):
     mul=a*sy.log(b*(x+70))
+    mul=''
     mul=mul*n
     return mul
 
 if __name__ == '__main__':
-    data = pd.read_csv('esm.csv')
+    data = pd.read_csv('../goc.csv')
     data['amount']=data['amount']/100/1000000
     data['ppl']=data['ppl']/1000000
     print(data)
@@ -34,7 +35,7 @@ if __name__ == '__main__':
     # eqList.append(sy.simplify(mul))
 
     mul=0
-    date=40
+    date=45
     for i in range(0,int(date)):
         mul = mul +funexp(int(date)-i, data.loc[i, 'ppl'], a, b,c)
         print(funexp(int(date)-i, data.loc[i, 'ppl'], a, b, c))
@@ -43,7 +44,7 @@ if __name__ == '__main__':
     eqList.append(sy.simplify(mul))
 
     mul=0
-    date=60
+    date=90
     for i in range(0,int(date)):
         mul = mul +funexp(int(date)-i, data.loc[i, 'ppl'], a, b, c)
     mul = mul - data['amount'][0:int(date)].sum()

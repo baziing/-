@@ -25,7 +25,7 @@ def ltv1(begin,end,data,a,b,c):
     return all
 
 def duoxiangshi():
-    data = pd.read_csv('test.csv')
+    data = pd.read_csv('../data/test.csv')
     data['amount'] = data['amount'] / 100 / 10000
     data['ppl'] = data['ppl'] / 10000
 

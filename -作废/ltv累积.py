@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # result=sy.nonlinsolve(eq,[a,b])
     # print(list(result))
     a,b,c,d,e=sy.symbols("a b c d e")
-    data = pd.read_csv('../test.csv')
+    data = pd.read_csv('../data/test.csv')
     data['日导量']=data['n']/data['day']
     eqList=[]
     for month in range(0,data.shape[0]-2):

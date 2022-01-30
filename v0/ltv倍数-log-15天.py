@@ -16,7 +16,7 @@ def funexp(x,n,a,b,c):
     return mul
 
 if __name__ == '__main__':
-    data = pd.read_csv('test.csv')
+    data = pd.read_csv('../data/test.csv')
     data['amount']=data['amount']/1000000
     data['ppl']=data['ppl']/1000000
     print(data)

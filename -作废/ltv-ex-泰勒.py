@@ -28,7 +28,7 @@ def amount(end,num,n,a,b,c):
 if __name__ == '__main__':
     a,b,c=sy.symbols('a b c')
 
-    data = pd.read_csv('../test.csv')
+    data = pd.read_csv('../data/test.csv')
     data['日导量'] = data['n'] / data['day']
     eqList = []
     for month in range(0,3):

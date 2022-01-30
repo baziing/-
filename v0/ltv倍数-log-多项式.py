@@ -24,7 +24,7 @@ def funexp(end,num,n,a,b,c,base):
 if __name__ == '__main__':
     a,b,c=sy.symbols("a b c")
 
-    data = pd.read_csv('ltv.csv')
+    data = pd.read_csv('../data/ltv.csv')
     data['n']=data['n']
     data['amount']=data['amount']
     data['日导量'] = data['n'] / data['day']

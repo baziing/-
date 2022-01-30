@@ -32,7 +32,7 @@ plt.plot(range(1,60),[fund(i,8.66382454076878, 0.014679624179565) for i in range
 # plt.plot(range(1,121),[funb(i,2.47523897, 4.58265984) for i in range(1,121)],'g:')
 # plt.plot(range(1,181),[funb(i,2.22428578, 2.94049228) for i in range(1,181)],'g:')
 
-data = pd.read_csv('test.csv')
+data = pd.read_csv('../data/test.csv')
 mlist=data['add'][1:60].tolist()
 plt.plot(range(1,60),mlist,'r')
 # print([funa(i,-0.0617481619690565, 0.00713508588689670) for i in range(1,181)])

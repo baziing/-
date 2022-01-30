@@ -66,18 +66,34 @@ if __name__ == '__main__':
     a,b=sy.symbols('a b')
 
     # 7-30 绝对值
-    p=20
-    values=[(1,40),(1,60)]
-    eqList=[]
-    for value in values:
-        sum=0
-        for i in range(0,value[1]):
-            print(1,i)
-            sum=sum+ltvsum(value[0]-i if value[0]-i>0 else 1,value[1]-i,data.loc[i,'ppl'],a,b,p)
-        eqList.append(sy.simplify(sum-data['amount'][value[0]-1:value[1]].sum()))
-    result1 = list(sy.nonlinsolve(eqList, [a, b]))
-    print(result1)
+    # p=20
+    # values=[(1,40),(1,60)]
+    # eqList=[]
+    # for value in values:
+    #     sum=0
+    #     for i in range(0,value[1]):
+    #         print(1,i)
+    #         sum=sum+ltvsum(value[0]-i if value[0]-i>0 else 1,value[1]-i,data.loc[i,'ppl'],a,b,p)
+    #     eqList.append(sy.simplify(sum-data['amount'][value[0]-1:value[1]].sum()))
+    # result1 = list(sy.nonlinsolve(eqList, [a, b]))
+    # print(result1)
 
+    ltvsumList=[]
+    pList=[]
+    values = [(1, 40), (1, 60)]
+    for p in [20,40,60,80,100]:
+        eqList = []
+        for value in values:
+            sum = 0
+            for i in range(0, value[1]):
+                print(1, p,i)
+                sum = sum + ltvsum(value[0] - i if value[0] - i > 0 else 1, value[1] - i, data.loc[i, 'ppl'], a, b, p)
+            eqList.append(sy.simplify(sum - data['amount'][value[0] - 1:value[1]].sum()))
+        result1 = list(sy.nonlinsolve(eqList, [a, b]))
+        if ltvmodel1(2,result1[0][0],result1[0][1],p)<=0:
+            continue
+        ltvsumList.append([ltvmodel1(i,result1[0][0],result1[0][1],p)for i in range(1,31)])
+        pList.append(p)
 
     # 30-60 增量
     values=[(1,90),(1,180)]
@@ -115,24 +131,42 @@ if __name__ == '__main__':
     # print(solved)
 
     ltvList=[]
-    for i in range(1,181):
-        if i<=30:
-            ltvList.append(ltvmodel1(i,result1[0][0],result1[0][1],p))
-        elif i<=50:
-            print(ltvmodel2(i,result2[0][0],result2[0][1]))
-            ltvList.append(ltvList[-1]+ltvmodel2(i,result2[0][0],result2[0][1]))
-        elif i<=90:
-            print(ltvmodel3(i,result3[0],result3[1]))
-            ltvList.append(ltvList[-1]+ltvmodel3(i,result3[0],result3[1]))
-        else:
-            ltvList.append(ltvList[-1] + ltvmodel4(i,415.10563042,  43.3586688))
+    color=['b','g','c','m','y']
+    for j in range(0,len(ltvsumList)):
+        ltvList=ltvsumList[j]
+        # ltvList.append(ltv0)
+        for i in range(31,181):
+            if i<=50:
+                ltvList.append(ltvList[-1] + ltvmodel2(i, result2[0][0], result2[0][1]))
+            elif i<=90:
+                ltvList.append(ltvList[-1] + ltvmodel3(i, result3[0], result3[1]))
+            else:
+                ltvList.append(ltvList[-1] + ltvmodel3(i, result3[0], result3[1]))
+                # ltvList.append(ltvList[-1] + ltvmodel4(i, 415.10563042, 43.3586688))
+        plt.plot(range(1, 181), ltvList, color[j]+'--',label=pList[j])
+
+    # plt.show()
+
+
+    # for i in range(1,181):
+    #     if i<=30:
+    #         ltvList.append(ltvmodel1(i,result1[0][0],result1[0][1],p))
+    #     elif i<=50:
+    #         print(ltvmodel2(i,result2[0][0],result2[0][1]))
+    #         ltvList.append(ltvList[-1]+ltvmodel2(i,result2[0][0],result2[0][1]))
+    #     elif i<=90:
+    #         print(ltvmodel3(i,result3[0],result3[1]))
+    #         ltvList.append(ltvList[-1]+ltvmodel3(i,result3[0],result3[1]))
+    #     else:
+    #         ltvList.append(ltvList[-1] + ltvmodel4(i,415.10563042,  43.3586688))
     # print(ltvList)
 
-    plt.plot(range(1, 181), ltvList, 'g--')
+    # plt.plot(range(1, 181), ltvList, 'g--')
 
     for i in range(0,len(ltvList)):
         print(round(ltvList[i],2))
 
-    df=pd.read_csv('ltv.csv')
-    plt.plot(range(1,181),df['ltv'][0:180].tolist(),'b--')
+    df=pd.read_csv('../data/ltv.csv')
+    plt.plot(range(1,181),df['ltv'][0:180].tolist(),'r',label='real')
+    plt.legend()
     plt.show()
