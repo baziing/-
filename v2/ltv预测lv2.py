@@ -3,7 +3,7 @@ from scipy.optimize import root
 import matplotlib.pyplot as plt
 import numpy as np
 
-test='2'
+test='0'
 
 def ltvmodel0(x,a,b,p):
     return a*np.log(x+p)-np.exp(-x)+b
@@ -79,14 +79,17 @@ def solve_function(unsolved_value):
 
 
 def getP(score):
-    if score<=0.4:
-        return round(-125*score+100)
-    elif score<=0.5:
-        return round(-300*score+170)
-    elif score<=0.7:
-        return round(-50*score+5)
-    elif score>0.7:
-        return round(100*(-score+1)/3)
+    return 80
+    print('score',min(330/(score*100-32),100))
+    return min(330/(score*100-32),100)
+    # if score<=0.4:
+    #     return round(-150*score+100)
+    # elif score<=0.5:
+    #     return round(-200*score+120)
+    # elif score<=0.7:
+    #     return round(-50*score+5)
+    # elif score>0.7:
+    #     return round(100*(-score+1)/3)
 
 
 def calmodel(score):
@@ -113,10 +116,10 @@ def calmodel(score):
         resultList.append(solved.x)
 
         drawing(pList,resultList)
-        print(pList,resultList)
+        print(pList)
         plt.plot(range(1, 181), drawing(pList,resultList)[0:180], label=pList[0])
 
-    df = pd.read_csv('../data/ltv.csv')
+    df = pd.read_csv('D:/neo/PYTHON/Amount/data/ltv.csv')
     plt.plot(range(1, 181), df['ltv'+test][0:180].tolist(), 'r', label='real')
     plt.legend()
     plt.show()
@@ -136,14 +139,14 @@ def drawing(pList,resultList):
 
 
 if __name__ == '__main__':
-    data = pd.read_excel('ltv预测v'+test+'.xlsx', usecols=[1, 2, 3], names=['day', 'ppl', 'amount'])
+    data = pd.read_excel('D:/neo/PYTHON/Amount/data/ltv预测v'+test+'.xlsx', usecols=[1, 2, 3], names=['day', 'ppl', 'amount'])
     data = data[~data['day'].isin(['日期'])].reset_index(drop=True)
     data['day'] = data['day'].apply(lambda x: x.strftime('%Y-%m-%d'))
     data['amount'] = data['amount'] /1000000/100
     data['ppl'] = data['ppl'] / 1000000
     score = data['amount'][90:180].sum() / data['amount'][0:90].sum() - data['ppl'][90:180].sum() / data['ppl'][0:90].sum()
-    values=[(1,90),(1,180)]
+    values=[(1,60),(1,120)]
     print(score)
     calmodel(score)
-    # plt.show()
+    plt.show()
     print('end------------------------------')
